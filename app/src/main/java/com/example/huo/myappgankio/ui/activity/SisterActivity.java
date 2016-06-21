@@ -29,7 +29,6 @@ public class SisterActivity extends BaseActivity {
         setContentView(R.layout.activity_sister);
         ButterKnife.bind(this);
         mUri = getIntent().getData();
-        Log.d(TAG, "initView: "+mUri.toString());
         super.initView();
     }
 

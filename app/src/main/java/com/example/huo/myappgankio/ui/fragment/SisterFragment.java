@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -35,26 +34,29 @@ import butterknife.ButterKnife;
  * A simple {@link BaseFragment} subclass.
  */
 public class SisterFragment extends BaseFragment {
-
+    private static final String TAG = "SisterFragment";
     @BindView(R.id.rv_sister)
     RecyclerView mRvSister;
     private SisterAdapter mAdapter;
+    String URL = "http://gank.io/api/data/福利/20/";
+    int i = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData("http://gank.io/api/data/福利/24/1");
+        getData(URL + "1");
     }
 
     private void getData(String url) {
-
+        Log.d(TAG, "getData: 这是什么鬼");
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 SisterBean sisterBean = new Gson().fromJson(response, SisterBean.class);
                 mAdapter.addData(sisterBean.getResults());
-
+                mAdapter.setPageSize(mAdapter.getPageSize() + sisterBean.getResults().size());
+                mAdapter.notifyDataChangedAfterLoadMore(true);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -90,7 +92,41 @@ public class SisterFragment extends BaseFragment {
         mRvSister.setAdapter(mAdapter);
         SisterAnimator animator = new SisterAnimator();
         mRvSister.setItemAnimator(animator);
-        animator.setStartActivity(new SisterAnimator.StartActivity() {
+        animator.setStartActivity(getStartActivity());
+//        mAdapter.setOnRecyclerViewItemClickListener(getOnRecyclerViewItemClickListener());
+        mAdapter.setOnRecyclerViewItemChildClickListener(getRecyclerViewItem());
+//        mAdapter.addFooterView(getView());
+        mAdapter.openLoadMore(true);
+//        mAdapter.setLoadingView();
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                Log.d(TAG, "onLoadMoreRequested: 走了吗");
+                i++;
+                Log.d(TAG, "onLoadMoreRequested: " + i);
+                getData(URL + i);
+
+            }
+        });
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @NonNull
+    private BaseQuickAdapter.OnRecyclerViewItemChildClickListener getRecyclerViewItem() {
+        return new BaseQuickAdapter
+                .OnRecyclerViewItemChildClickListener() {
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                mAdapter.notifyItemChanged(i, SisterAdapter.ACTION_LIKE_IMAGE_CLICKED);
+                Toast.makeText(getActivity(), "点了吗" + i, Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
+    @NonNull
+    private SisterAnimator.StartActivity getStartActivity() {
+        return new SisterAnimator.StartActivity() {
             @Override
             public void startActivity(int position) {
                 Uri uri = Uri.parse(((SisterBean.ResultsBean) mAdapter.getData().get(position))
@@ -98,19 +134,7 @@ public class SisterFragment extends BaseFragment {
                 ((MainActivity) getActivity()).startActivity(SisterActivity.class, uri);
             }
 
-        });
-//        mAdapter.setOnRecyclerViewItemClickListener(getOnRecyclerViewItemClickListener());
-        mAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter
-                .OnRecyclerViewItemChildClickListener() {
-
-            @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-//                View viewById = view.findViewById(R.id.v_bg_like);
-                mAdapter.notifyItemChanged(i, SisterAdapter.ACTION_LIKE_IMAGE_CLICKED);
-                Toast.makeText(getActivity(), "点了吗", Toast.LENGTH_SHORT).show();
-            }
-        });
-        super.onViewCreated(view, savedInstanceState);
+        };
     }
 
 //    @NonNull

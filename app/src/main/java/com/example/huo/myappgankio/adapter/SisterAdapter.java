@@ -11,7 +11,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.huo.myappgankio.R;
 import com.example.huo.myappgankio.bean.SisterBean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import javax.sql.DataSource;
 
 /**
  * Created by huo on 19/06/16.
@@ -21,6 +25,7 @@ public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
     public static final String ACTION_LIKE_IMAGE_CLICKED = "action_like_image_button";
     ImageLoader mLoader;
     int lastAnimatedPosition = 0;
+
 
     public SisterAdapter(Context context, int layoutResId, ImageLoader loader) {
         super(context, layoutResId, null);
@@ -84,6 +89,8 @@ public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
 //            }
 //        });
 //    }
+
+
 
     @Override
     public void openLoadAnimation() {
