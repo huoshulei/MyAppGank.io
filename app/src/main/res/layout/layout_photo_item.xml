@@ -14,22 +14,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/niv_sister"
+        <RelativeLayout
+            android:id="@+id/fl_image"
             android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/niv_sister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"/>
+
+            <View
+                android:id="@+id/v_bg_like"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/niv_sister"
+                android:layout_alignTop="@id/niv_sister"
+                android:background="@drawable/bg_like_circle_background"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_heart_outline_white"
+                android:visibility="invisible"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_sister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/fl_image"
+            android:layout_below="@+id/fl_image"
             android:text="提供"
-            android:textSize="10sp"
             android:textColor="#999"
-            android:layout_below="@+id/niv_sister"
-            android:layout_alignEnd="@+id/niv_sister"/>
+            android:textSize="10sp"/>
 
     </RelativeLayout>
 

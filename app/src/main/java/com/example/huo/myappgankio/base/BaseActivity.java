@@ -1,7 +1,11 @@
 package com.example.huo.myappgankio.base;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
@@ -40,5 +44,31 @@ public class BaseActivity extends AppCompatActivity {
 
     public void initEvent() {
 
+    }
+
+    public void startActivity(Class<?> activity) {
+
+        startActivity(activity, null, null);
+    }
+
+    public void startActivity(Class<?> activity, Bundle bundle) {
+        startActivity(activity, bundle, null);
+    }
+
+    public void startActivity(Class<?> activity, Uri uri) {
+        startActivity(activity, null, uri);
+    }
+
+    public void startActivity(Class<?> activity, Bundle bundle, Uri uri) {
+        Intent intent = new Intent(this, activity);
+        if (bundle != null)
+            intent.putExtras(bundle);
+        if (uri != null)
+            intent.setData(uri);
+        startActivity(intent);
+    }
+    @Override
+    public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode) {
+        super.startActivityFromFragment(fragment, intent, requestCode);
     }
 }

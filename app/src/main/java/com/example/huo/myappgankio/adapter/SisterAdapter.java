@@ -1,6 +1,7 @@
 package com.example.huo.myappgankio.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView.ScaleType;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -17,15 +18,38 @@ import java.util.Random;
  */
 
 public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
+    public static final String ACTION_LIKE_IMAGE_CLICKED = "action_like_image_button";
     ImageLoader mLoader;
+    int lastAnimatedPosition = 0;
 
     public SisterAdapter(Context context, int layoutResId, ImageLoader loader) {
         super(context, layoutResId, null);
         mLoader = loader;
     }
+//    private void runEnterAnimation(View view, int position) {
+////        if (!animateItems || position >= ANIMATED_ITEMS_COUNT - 1) {
+////            return;
+////        }
+//
+//        if (position > lastAnimatedPosition) {
+//            lastAnimatedPosition = position;
+//            view.setTranslationY(Utils.getScreenHeight(mContext));
+//            view.animate()
+//                    .translationY(0)
+//                    .setInterpolator(new DecelerateInterpolator(3.f))
+//                    .setDuration(700)
+//                    .start();
+//        }
+//    }
+
+//    @Override
+//    public void onBindViewHolder(RecyclerView.ViewHolder holder, int positions) {
+//        runEnterAnimation(holder.itemView,positions);
+//        super.onBindViewHolder(holder, positions);
+//    }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, SisterBean.ResultsBean sisterBean) {
+    protected void convert(final BaseViewHolder baseViewHolder, SisterBean.ResultsBean sisterBean) {
         baseViewHolder.setText(R.id.tv_sister, "提供者：" + sisterBean.getWho());
         NetworkImageView imageView = baseViewHolder.getView(R.id.niv_sister);
         imageView.setDefaultImageResId(R.mipmap.ic_launcher);
@@ -42,7 +66,24 @@ public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
                 return key.toString();
             }
         });
+        baseViewHolder.setOnClickListener(R.id.niv_sister, new OnItemChildClickListener());
+//        View view=baseViewHolder.itemView;
+//        setUpClickableViews(view,baseViewHolder);
     }
+
+//    private void setUpClickableViews(View view, final BaseViewHolder baseViewHolder) {
+//        baseViewHolder.getView(R.id.niv_sister).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int adapterPosition = baseViewHolder.getAdapterPosition();
+////                feedItems.get(adapterPosition).likesCount++;
+//                notifyItemChanged(adapterPosition, ACTION_LIKE_IMAGE_CLICKED);
+////                if (mContext instanceof MainActivity) {
+////                    ((MainActivity) mContext).showLikedSnackbar();
+////                }
+//            }
+//        });
+//    }
 
     @Override
     public void openLoadAnimation() {
