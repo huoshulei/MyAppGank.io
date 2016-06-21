@@ -40,6 +40,7 @@ public class SisterFragment extends BaseFragment {
     private SisterAdapter mAdapter;
     String URL = "http://gank.io/api/data/福利/20/";
     int i = 1;
+    private boolean isLoadNext = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,20 +49,26 @@ public class SisterFragment extends BaseFragment {
     }
 
     private void getData(String url) {
-        Log.d(TAG, "getData: 这是什么鬼");
+        Log.d(TAG, "getData: 这是什么鬼" + url);
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 SisterBean sisterBean = new Gson().fromJson(response, SisterBean.class);
+                if (sisterBean.getResults().size() <= 0) {
+                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
+                    mAdapter.openLoadMore(false);
+                    return;
+                }
                 mAdapter.addData(sisterBean.getResults());
                 mAdapter.setPageSize(mAdapter.getPageSize() + sisterBean.getResults().size());
                 mAdapter.notifyDataChangedAfterLoadMore(true);
+                isLoadNext = true;
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getActivity(), "小伙子 你确定有网络！", Toast.LENGTH_SHORT).show();
             }
         });
         mQueue.add(request);
@@ -101,11 +108,13 @@ public class SisterFragment extends BaseFragment {
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                Log.d(TAG, "onLoadMoreRequested: 走了吗");
-                i++;
-                Log.d(TAG, "onLoadMoreRequested: " + i);
-                getData(URL + i);
-
+                if (isLoadNext) {
+                    Log.d(TAG, "onLoadMoreRequested:1 " + isLoadNext);
+                    isLoadNext = false;
+                    Log.d(TAG, "onLoadMoreRequested:2 " + isLoadNext);
+                    i++;
+                    getData(URL + i);
+                }
             }
         });
         super.onViewCreated(view, savedInstanceState);
@@ -113,13 +122,11 @@ public class SisterFragment extends BaseFragment {
 
     @NonNull
     private BaseQuickAdapter.OnRecyclerViewItemChildClickListener getRecyclerViewItem() {
-        return new BaseQuickAdapter
-                .OnRecyclerViewItemChildClickListener() {
-
+        return new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 mAdapter.notifyItemChanged(i, SisterAdapter.ACTION_LIKE_IMAGE_CLICKED);
-                Toast.makeText(getActivity(), "点了吗" + i, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "点了吗" + i, Toast.LENGTH_SHORT).show();
             }
         };
     }
