@@ -105,19 +105,22 @@ public class SisterFragment extends BaseFragment {
 //        mAdapter.addFooterView(getView());
         mAdapter.openLoadMore(true);
 //        mAdapter.setLoadingView();
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        mAdapter.setOnLoadMoreListener(getRequestLoadMoreListener());
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @NonNull
+    private BaseQuickAdapter.RequestLoadMoreListener getRequestLoadMoreListener() {
+        return new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 if (isLoadNext) {
-                    Log.d(TAG, "onLoadMoreRequested:1 " + isLoadNext);
                     isLoadNext = false;
-                    Log.d(TAG, "onLoadMoreRequested:2 " + isLoadNext);
                     i++;
                     getData(URL + i);
                 }
             }
-        });
-        super.onViewCreated(view, savedInstanceState);
+        };
     }
 
     @NonNull

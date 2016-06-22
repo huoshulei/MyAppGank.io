@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 
 public class SisterAnimator extends DefaultItemAnimator {
+    private static final String TAG = "SisterAnimator";
     private static final DecelerateInterpolator DECCELERATE_INTERPOLATOR = new
             DecelerateInterpolator();
     private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new
@@ -174,9 +176,9 @@ public class SisterAnimator extends DefaultItemAnimator {
         ivLike.setVisibility(View.VISIBLE);
 //        holder.setVisible(R.id.v_bg_like,true);
 //        holder.setVisible(R.id.iv_like,true);
-        vBgLike.setScaleY(0.01f);
+        vBgLike.setScaleY(0.01f);//初始缩放系数
         vBgLike.setScaleX(0.01f);
-        vBgLike.setAlpha(1f);
+        vBgLike.setAlpha(1f);//设置透明度
         ivLike.setScaleY(0.01f);
         ivLike.setScaleX(0.01f);
 
@@ -214,14 +216,16 @@ public class SisterAnimator extends DefaultItemAnimator {
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                Log.d(TAG, "onAnimationEnd: 3");
                 likeAnimationsMap.remove(holder);
                 resetLikeAnimationState(holder);
                 dispatchChangeFinishedIfAllAnimationsEnded(holder);
             }
         });
         animatorSet.start();
-
+        Log.d(TAG, "animatePhotoLike: 1");
         likeAnimationsMap.put(holder, animatorSet);
+        Log.d(TAG, "animatePhotoLike: 2");
     }
 
     private void dispatchChangeFinishedIfAllAnimationsEnded(BaseViewHolder holder) {
@@ -252,16 +256,16 @@ public class SisterAnimator extends DefaultItemAnimator {
         }
     }
 
-    public StartActivity mStartActivity;
+    private StartActivity mStartActivity;
 
     public void setStartActivity(StartActivity startActivity) {
         mStartActivity = startActivity;
     }
 
-    public static class FeedItemHolderInfo extends ItemHolderInfo {
-        public String updateAction;
+    private static class FeedItemHolderInfo extends ItemHolderInfo {
+        String updateAction;
 
-        public FeedItemHolderInfo(String updateAction) {
+        FeedItemHolderInfo(String updateAction) {
             this.updateAction = updateAction;
         }
     }
