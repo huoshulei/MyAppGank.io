@@ -77,6 +77,9 @@ public class SisterActivity extends BaseActivity {
 //        Log.d(TAG, "initData: " + metrics.heightPixels + ">>>>" + metrics.widthPixels);
 //    }
 
+    /**
+     * 这个只是Retrofit单体实践
+     */
     public void initDataRetrofit() {
 
         Observable.just(mUri).map(new Func1<Uri, Bitmap>() {
