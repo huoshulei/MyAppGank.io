@@ -143,9 +143,11 @@ public class SisterActivity extends BaseActivity {
     }
 
     public void initDataRetrofit(Uri uri) {
+        //这个参数只是因为方法需要一个参数而已 没有实际作用
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://gank.io/api/")
-                //这个参数只是因为方法需要一个参数而已 没有实际作用
+                //这个是添加返回值类型支持
                 .addConverterFactory(GsonConverterFactory.create())
+                //这个是吧返回对象改为Observable对象
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         retrofit.create(MovieService.class)
@@ -174,6 +176,10 @@ public class SisterActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 在这里 你有无限可能
+     * 发挥的余地不可想象
+     */
     interface MovieService {
         @GET
         Observable<ResponseBody> getSister(@Url String url);
