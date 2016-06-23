@@ -144,6 +144,7 @@ public class SisterActivity extends BaseActivity {
 
     public void initDataRetrofit(Uri uri) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://gank.io/api/")
+                //这个参数只是因为方法需要一个参数而已 没有实际作用
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -183,8 +184,9 @@ public class SisterActivity extends BaseActivity {
         mIvSister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.cancel_action);
-                Snackbar.make(coordinatorLayout,"你点？ 你再点？",Snackbar.LENGTH_LONG).show();
+                CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+                        .cancel_action);
+                Snackbar.make(coordinatorLayout, "你点？ 你再点？", Snackbar.LENGTH_LONG).show();
             }
         });
     }
