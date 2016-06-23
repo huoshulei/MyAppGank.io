@@ -25,7 +25,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //弹窗动画
+
     //这俩货是黄油刀
+
     //一个很赞的RecycleView辅助类
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha3'
@@ -45,4 +47,13 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:23.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.nispok:snackbar:2.11.0'
+    compile 'com.williammora:snackbar:1.4.0'
+    compile 'com.github.viethoa:snackbar:1.0.0'
+    compile 'com.android.support:design:23.4.0'
 }
