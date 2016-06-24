@@ -36,11 +36,11 @@ public class MyAnimation extends Animation {
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         mCamera.save();
+        //三个参数分别是top距离 底部距离 两端距离
         mCamera.translate(0, 0, 80.f - 80.f * interpolatedTime);
-
-//        mCamera.rotateX(360 * interpolatedTime);
-        mCamera.rotateY(-45 * interpolatedTime);
-//        mCamera.rotateZ(360 * interpolatedTime);
+//        mCamera.rotateX(360 * interpolatedTime);//x轴旋转
+        mCamera.rotateY(-45 * interpolatedTime);//y轴旋转
+//        mCamera.rotateZ(360 * interpolatedTime);//z轴旋转
         Matrix matrix = t.getMatrix();
         mCamera.getMatrix(matrix);
         mCamera.restore();
