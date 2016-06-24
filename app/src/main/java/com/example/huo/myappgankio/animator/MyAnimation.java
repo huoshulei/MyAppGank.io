@@ -5,7 +5,6 @@ import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
 
 /**
@@ -30,7 +29,7 @@ public class MyAnimation extends Animation {
         super.initialize(width, height, parentWidth, parentHeight);
         setDuration(duration);
         setFillAfter(true);
-//        setInterpolator(new LinearInterpolator());
+        setInterpolator(new LinearInterpolator());
     }
 
     @Override
