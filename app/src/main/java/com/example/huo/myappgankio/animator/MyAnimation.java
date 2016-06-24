@@ -1,0 +1,50 @@
+package com.example.huo.myappgankio.animator;
+
+
+import android.graphics.Camera;
+import android.graphics.Matrix;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.Transformation;
+
+/**
+ * Created by huo on 24/06/16.
+ */
+
+public class MyAnimation extends Animation {
+    float centerX;//X轴 旋转坐标
+    float centerY;//Y轴旋转坐标
+    int duration;//动画时长
+    Camera mCamera = new Camera();
+
+
+    public MyAnimation(int duration, float centerX, float centerY) {
+        this.duration = duration;
+        this.centerX = centerX;
+        this.centerY = centerY;
+    }
+
+    @Override
+    public void initialize(int width, int height, int parentWidth, int parentHeight) {
+        super.initialize(width, height, parentWidth, parentHeight);
+        setDuration(duration);
+        setFillAfter(true);
+//        setInterpolator(new LinearInterpolator());
+    }
+
+    @Override
+    protected void applyTransformation(float interpolatedTime, Transformation t) {
+        mCamera.save();
+        mCamera.translate(0, 0, 80.f - 80.f * interpolatedTime);
+
+//        mCamera.rotateX(360 * interpolatedTime);
+        mCamera.rotateY(-45 * interpolatedTime);
+//        mCamera.rotateZ(360 * interpolatedTime);
+        Matrix matrix = t.getMatrix();
+        mCamera.getMatrix(matrix);
+        mCamera.restore();
+        matrix.preTranslate(-centerX, -centerY);
+        matrix.postTranslate(centerX, centerY);
+    }
+}

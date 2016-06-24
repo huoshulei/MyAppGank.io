@@ -192,7 +192,7 @@ public class SisterAnimator extends DefaultItemAnimator {
         bgScaleXAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
         ObjectAnimator bgAlphaAnim = ObjectAnimator.ofFloat(vBgLike, "alpha", 1f, 0f);
         bgAlphaAnim.setDuration(500);
-        bgAlphaAnim.setStartDelay(150);
+        bgAlphaAnim.setStartDelay(200);
         bgAlphaAnim.setInterpolator(DECCELERATE_INTERPOLATOR);
 
         ObjectAnimator imgScaleUpYAnim = ObjectAnimator.ofFloat(ivLike, "scaleY", 0.1f, 1f);
@@ -208,7 +208,6 @@ public class SisterAnimator extends DefaultItemAnimator {
         ObjectAnimator imgScaleDownXAnim = ObjectAnimator.ofFloat(ivLike, "scaleX", 1f, 0f);
         imgScaleDownXAnim.setDuration(600);
         imgScaleDownXAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-
         animatorSet.playTogether(bgScaleYAnim, bgScaleXAnim, bgAlphaAnim, imgScaleUpYAnim,
                 imgScaleUpXAnim);
         animatorSet.play(imgScaleDownYAnim).with(imgScaleDownXAnim).after(imgScaleUpYAnim);

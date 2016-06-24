@@ -9,6 +9,10 @@ import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.android.volley.Response;
@@ -16,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.AndroidAuthenticator;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.huo.myappgankio.R;
+import com.example.huo.myappgankio.animator.MyAnimation;
 import com.example.huo.myappgankio.base.BaseActivity;
 
 import java.io.IOException;
@@ -45,6 +50,8 @@ public class SisterActivity extends BaseActivity {
     Uri mUri;
     @BindView(R.id.iv_sister)
     ImageView mIvSister;
+    private Animation mAnimation;
+    private MyAnimation mMyAnimation;
 
     @Override
     public void initView() {
@@ -52,7 +59,14 @@ public class SisterActivity extends BaseActivity {
         ButterKnife.bind(this);
         mUri = getIntent().getData();
         super.initView();
+        initAnim();
         initDataRetrofit(mUri);
+    }
+
+    private void initAnim() {
+        mAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim
+                .sister_anim);
+        mMyAnimation = new MyAnimation(1500, getWidth(), getHeight()/2);
     }
 
 //    @Override
@@ -175,8 +189,10 @@ public class SisterActivity extends BaseActivity {
                     @Override
                     public void onNext(Bitmap bitmap) {
                         mIvSister.setImageBitmap(bitmap);
+                        mIvSister.setAnimation(mAnimation);
                     }
                 });
+
     }
 
     /**
@@ -196,6 +212,9 @@ public class SisterActivity extends BaseActivity {
                 CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                         .cancel_action);
                 Snackbar.make(coordinatorLayout, "你点？ 你再点？", Snackbar.LENGTH_LONG).show();
+//                getLayoutInflater().inflate()
+                ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0).setAnimation
+                        (mMyAnimation);
             }
         });
     }
