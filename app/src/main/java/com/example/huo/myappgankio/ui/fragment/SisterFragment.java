@@ -18,8 +18,8 @@ import com.example.huo.myappgankio.adapter.SisterAdapter;
 import com.example.huo.myappgankio.animator.SisterAnimator;
 import com.example.huo.myappgankio.base.BaseFragment;
 import com.example.huo.myappgankio.bean.ResultBean;
-import com.example.huo.myappgankio.http.HttpRetrofit;
-import com.example.huo.myappgankio.http.RxjavaListener;
+import com.example.huo.myappgankio.http.HttpRetrofitDemo;
+import com.example.huo.myappgankio.rxjava.HttpRxJava.RxjavaListener;
 import com.example.huo.myappgankio.ui.activity.MainActivity;
 import com.example.huo.myappgankio.ui.activity.SisterActivity;
 import com.example.huo.myappgankio.util.BitmpCacheUtil;
@@ -40,12 +40,12 @@ public class SisterFragment extends BaseFragment {
     String URL = "http://gank.io/api/data/福利/20/";
     int i = 1;
     private boolean isLoadNext = false;
-    private HttpRetrofit<ResultBean> mRetrofit;
+    private HttpRetrofitDemo mRetrofit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData(i+"");
+        getData(i + "");
 //        getData(URL + "1");
     }
 
@@ -75,12 +75,11 @@ public class SisterFragment extends BaseFragment {
 //        mQueue.add(request);
 //    }
 
-    private void getData(String apge) {
-        if (mRetrofit==null)
-        mRetrofit = new HttpRetrofit<ResultBean>(HttpRetrofit.Mode.DATA);
-        mRetrofit.getData("福利", "20", apge);
+    private void getData(String page) {
+        if (mRetrofit == null)
+            mRetrofit = new HttpRetrofitDemo();
+        mRetrofit.getData("福利", "20", page);
         mRetrofit.setRxjavaListener(new RxjavaListener<ResultBean>() {
-
 
             @Override
             public void onNext(List<ResultBean> t) {
