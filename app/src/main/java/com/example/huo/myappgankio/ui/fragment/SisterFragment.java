@@ -6,26 +6,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.StringRequest;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.huo.myappgankio.R;
 import com.example.huo.myappgankio.adapter.SisterAdapter;
 import com.example.huo.myappgankio.animator.SisterAnimator;
 import com.example.huo.myappgankio.base.BaseFragment;
-import com.example.huo.myappgankio.bean.SisterBean;
+import com.example.huo.myappgankio.bean.ResultBean;
+import com.example.huo.myappgankio.http.HttpRetrofit;
+import com.example.huo.myappgankio.http.RxjavaListener;
 import com.example.huo.myappgankio.ui.activity.MainActivity;
 import com.example.huo.myappgankio.ui.activity.SisterActivity;
 import com.example.huo.myappgankio.util.BitmpCacheUtil;
-import com.google.gson.Gson;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,37 +40,66 @@ public class SisterFragment extends BaseFragment {
     String URL = "http://gank.io/api/data/福利/20/";
     int i = 1;
     private boolean isLoadNext = false;
+    private HttpRetrofit<ResultBean> mRetrofit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData(URL + "1");
+        getData(i+"");
+//        getData(URL + "1");
     }
 
-    private void getData(String url) {
-        Log.d(TAG, "getData: 这是什么鬼" + url);
-        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+//    private void getData(String url) {
+//        Log.d(TAG, "getData: 这是什么鬼" + url);
+//        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+//
+//            @Override
+//            public void onResponse(String response) {
+//                SisterBean sisterBean = new Gson().fromJson(response, SisterBean.class);
+//                if (sisterBean.getResults().size() <= 0) {
+//                    Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
+//                    mAdapter.openLoadMore(false);
+//                    return;
+//                }
+//                mAdapter.addData(sisterBean.getResults());
+//                mAdapter.setPageSize(mAdapter.getPageSize() + sisterBean.getResults().size());
+//                mAdapter.notifyDataChangedAfterLoadMore(true);
+//                isLoadNext = true;
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getActivity(), "小伙子 你确定有网络！", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        mQueue.add(request);
+//    }
+
+    private void getData(String apge) {
+        if (mRetrofit==null)
+        mRetrofit = new HttpRetrofit<ResultBean>(HttpRetrofit.Mode.DATA);
+        mRetrofit.getData("福利", "20", apge);
+        mRetrofit.setRxjavaListener(new RxjavaListener<ResultBean>() {
+
 
             @Override
-            public void onResponse(String response) {
-                SisterBean sisterBean = new Gson().fromJson(response, SisterBean.class);
-                if (sisterBean.getResults().size() <= 0) {
+            public void onNext(List<ResultBean> t) {
+                if (t.size() <= 0) {
                     Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
                     mAdapter.openLoadMore(false);
                     return;
                 }
-                mAdapter.addData(sisterBean.getResults());
-                mAdapter.setPageSize(mAdapter.getPageSize() + sisterBean.getResults().size());
+                mAdapter.addData(t);
+                mAdapter.setPageSize(mAdapter.getPageSize() + t.size());
                 mAdapter.notifyDataChangedAfterLoadMore(true);
                 isLoadNext = true;
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "小伙子 你确定有网络！", Toast.LENGTH_SHORT).show();
+            public void onError() {
+
             }
         });
-        mQueue.add(request);
     }
 
     public SisterFragment() {
@@ -117,7 +145,7 @@ public class SisterFragment extends BaseFragment {
                 if (isLoadNext) {
                     isLoadNext = false;
                     i++;
-                    getData(URL + i);
+                    getData("" + i);
                 }
             }
         };
@@ -139,8 +167,7 @@ public class SisterFragment extends BaseFragment {
         return new SisterAnimator.StartActivity() {
             @Override
             public void startActivity(int position) {
-                Uri uri = Uri.parse(((SisterBean.ResultsBean) mAdapter.getData().get(position))
-                        .getUrl());
+                Uri uri = Uri.parse(((ResultBean) mAdapter.getData().get(position)).getUrl());
                 ((MainActivity) getActivity()).startActivity(SisterActivity.class, uri);
             }
 

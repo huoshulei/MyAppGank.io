@@ -9,6 +9,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.huo.myappgankio.R;
+import com.example.huo.myappgankio.bean.ResultBean;
 import com.example.huo.myappgankio.bean.SisterBean;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import javax.sql.DataSource;
  * Created by huo on 19/06/16.
  */
 
-public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
+public class SisterAdapter extends BaseQuickAdapter<ResultBean> {
     public static final String ACTION_LIKE_IMAGE_CLICKED = "action_like_image_button";
     ImageLoader mLoader;
     int lastAnimatedPosition = 0;
@@ -54,7 +55,7 @@ public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
 //    }
 
     @Override
-    protected void convert(final BaseViewHolder baseViewHolder, SisterBean.ResultsBean sisterBean) {
+    protected void convert(final BaseViewHolder baseViewHolder, ResultBean sisterBean) {
         baseViewHolder.setText(R.id.tv_sister, "提供者：" + sisterBean.getWho());
         NetworkImageView imageView = baseViewHolder.getView(R.id.niv_sister);
         imageView.setDefaultImageResId(R.mipmap.ic_launcher);
@@ -96,4 +97,5 @@ public class SisterAdapter extends BaseQuickAdapter<SisterBean.ResultsBean> {
     public void openLoadAnimation() {
         openLoadAnimation(new Random().nextInt(5) + 1);
     }
+
 }
