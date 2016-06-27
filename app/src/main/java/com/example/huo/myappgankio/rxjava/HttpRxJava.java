@@ -24,6 +24,9 @@ public abstract class HttpRxJava<T> {
     public Retrofit mRetrofit;
     private RxjavaListener mRxjavaListener;
 
+    private T t;
+
+
     public HttpRxJava() {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.connectTimeout(5, TimeUnit.SECONDS);
@@ -75,8 +78,8 @@ public abstract class HttpRxJava<T> {
         mRxjavaListener = rxjavaListener;
     }
 
-    public interface RxjavaListener<T> {
-        void onNext(List<T> t);
+    public interface RxjavaListener {
+        void onNext(List t);
 
         void onError();
     }

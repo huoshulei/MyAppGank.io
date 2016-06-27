@@ -17,8 +17,10 @@ import com.example.huo.myappgankio.R;
 import com.example.huo.myappgankio.adapter.SisterAdapter;
 import com.example.huo.myappgankio.animator.SisterAnimator;
 import com.example.huo.myappgankio.base.BaseFragment;
+import com.example.huo.myappgankio.bean.GankIoEntity;
 import com.example.huo.myappgankio.bean.ResultBean;
 import com.example.huo.myappgankio.http.HttpRetrofitDemo;
+import com.example.huo.myappgankio.rxjava.HttpRxJava;
 import com.example.huo.myappgankio.rxjava.HttpRxJava.RxjavaListener;
 import com.example.huo.myappgankio.ui.activity.MainActivity;
 import com.example.huo.myappgankio.ui.activity.SisterActivity;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 /**
  * A simple {@link BaseFragment} subclass.
@@ -79,10 +82,37 @@ public class SisterFragment extends BaseFragment {
         if (mRetrofit == null)
             mRetrofit = new HttpRetrofitDemo();
         mRetrofit.getData("福利", "20", page);
-        mRetrofit.setRxjavaListener(new RxjavaListener<ResultBean>() {
+
+//        new HttpRxJava<ResultBean>() {
+//
+//            int ii = 0;
+//            @Override
+//            public Object getObject() {
+//                return null;
+//            }
+//
+//            @Override
+//            public Observable<GankIoEntity<List<ResultBean>>> getObsercable() {
+//                return null;
+//            }
+//
+//            RxjavaListener  r = new RxjavaListener<ResultBean>() {
+//                @Override
+//                public void onNext(List t) {
+//                    ii ++;
+//                }
+//
+//                @Override
+//                public void onError() {
+//
+//                }
+//            };
+//        };
+
+        mRetrofit.setRxjavaListener(new RxjavaListener() {
 
             @Override
-            public void onNext(List<ResultBean> t) {
+            public void onNext(List t) {
                 if (t.size() <= 0) {
                     Toast.makeText(getActivity(), "已无更多可以加载", Toast.LENGTH_SHORT).show();
                     mAdapter.openLoadMore(false);
