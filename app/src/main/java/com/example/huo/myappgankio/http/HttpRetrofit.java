@@ -135,7 +135,6 @@ public class HttpRetrofit<T> {
          * @param quantity {0<quantity<=50}
          * @param page     {页码>0}
          */
-//        Observable<GankIoEntity<List<RandomBean>>> getRandomData()
     }
 
     interface GetResult<T> {
