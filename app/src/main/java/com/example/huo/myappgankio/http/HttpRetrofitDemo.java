@@ -15,22 +15,28 @@ import rx.Observable;
  */
 
 public class HttpRetrofitDemo extends HttpRxJava<ResultBean> {
+    String data = "data";
     String type = "福利";
     String quantity = "20";
     String page = "1";
 
+    public HttpRetrofitDemo() {
+        super();
+    }
+
     @Override
-    public Object getObject() {
+    protected Object getObject() {
         return null;
     }
 
     @Override
-    public Observable<GankIoEntity<List<ResultBean>>> getObsercable() {
+    protected Observable<GankIoEntity<List<ResultBean>>> getObsercable() {
         return mRetrofit.create(GetSisterResult.class)
-                .getData(type, quantity, page);
+                .getData(data, type, quantity, page);
     }
 
-    public void getData(String type, String quantity, String page) {
+    public void getData(String data, String type, String quantity, String page) {
+        this.data = data;
         this.type = type;
         this.quantity = quantity;
         this.page = page;
@@ -42,15 +48,16 @@ public class HttpRetrofitDemo extends HttpRxJava<ResultBean> {
      */
     interface GetSisterResult {
         /**
+         * @param data     {data,day,random}
          * @param type     {Android | iOS | 休息视频 | 福利 | 拓展资源 | 前端 | 瞎推荐 | App 可以选其一}
          * @param quantity {0<quantity<=50}
          * @param page     {页码>0}
          */
-        @GET("api/data/{type}/{quantity}/{page}")
-        Observable<GankIoEntity<List<ResultBean>>> getData(
-                @Path("type") String type,
-                @Path("quantity") String quantity,
-                @Path("page") String page);
+        @GET("api/{data}/{type}/{quantity}/{page}")
+        Observable<GankIoEntity<List<ResultBean>>> getData(@Path("data") String data,
+                                                           @Path("type") String type,
+                                                           @Path("quantity") String quantity,
+                                                           @Path("page") String page);
     }
 
 }

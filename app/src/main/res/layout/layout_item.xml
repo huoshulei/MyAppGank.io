@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/menu_fragment_background"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="5dp">
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="这是赦免么"
+        android:textColor="#fff"
+        android:textSize="20sp"/>
+</android.support.v7.widget.CardView>

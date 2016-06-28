@@ -1,8 +1,6 @@
 package com.example.huo.myappgankio.base;
 
 
-
-
 import android.app.Fragment;
 import android.os.Bundle;
 
@@ -15,7 +13,7 @@ import com.example.huo.myappgankio.ui.activity.MainActivity;
  */
 public abstract class BaseFragment extends Fragment {
     public RequestQueue mQueue;
-    MainActivity mMainActivity;
+    public MainActivity mMainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

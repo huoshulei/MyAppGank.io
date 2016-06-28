@@ -17,10 +17,8 @@ import com.example.huo.myappgankio.R;
 import com.example.huo.myappgankio.adapter.SisterAdapter;
 import com.example.huo.myappgankio.animator.SisterAnimator;
 import com.example.huo.myappgankio.base.BaseFragment;
-import com.example.huo.myappgankio.bean.GankIoEntity;
 import com.example.huo.myappgankio.bean.ResultBean;
 import com.example.huo.myappgankio.http.HttpRetrofitDemo;
-import com.example.huo.myappgankio.rxjava.HttpRxJava;
 import com.example.huo.myappgankio.rxjava.HttpRxJava.RxjavaListener;
 import com.example.huo.myappgankio.ui.activity.MainActivity;
 import com.example.huo.myappgankio.ui.activity.SisterActivity;
@@ -30,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
 
 /**
  * A simple {@link BaseFragment} subclass.
@@ -40,7 +37,7 @@ public class SisterFragment extends BaseFragment {
     @BindView(R.id.rv_sister)
     RecyclerView mRvSister;
     private SisterAdapter mAdapter;
-    String URL = "http://gank.io/api/data/福利/20/";
+    //    String URL = "http://gank.io/api/data/福利/20/";
     int i = 1;
     private boolean isLoadNext = false;
     private HttpRetrofitDemo mRetrofit;
@@ -81,7 +78,7 @@ public class SisterFragment extends BaseFragment {
     private void getData(String page) {
         if (mRetrofit == null)
             mRetrofit = new HttpRetrofitDemo();
-        mRetrofit.getData("福利", "20", page);
+        mRetrofit.getData("data", "福利", "20", page);
 
 //        new HttpRxJava<ResultBean>() {
 //
@@ -126,7 +123,7 @@ public class SisterFragment extends BaseFragment {
 
             @Override
             public void onError() {
-
+                mMainActivity.showToast("请检查网络！");
             }
         });
     }

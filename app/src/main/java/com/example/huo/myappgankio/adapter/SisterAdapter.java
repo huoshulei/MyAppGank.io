@@ -93,7 +93,6 @@ public class SisterAdapter extends BaseQuickAdapter<ResultBean> {
 
 
 
-    @Override
     public void openLoadAnimation() {
         openLoadAnimation(new Random().nextInt(5) + 1);
     }

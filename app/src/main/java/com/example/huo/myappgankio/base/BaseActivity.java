@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -21,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
     public RequestQueue mQueue;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (mQueue == null)
             mQueue = Volley.newRequestQueue(getApplicationContext());
@@ -45,13 +46,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void initEvent() {
+    }
 
+    public void showToast(String data) {
+        Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
     }
 
     public float getWidth() {
         DisplayMetrics metrics = getDisplayMetrics();
         return metrics.widthPixels;
     }
+
     public float getHeight() {
         DisplayMetrics metrics = getDisplayMetrics();
         return metrics.heightPixels;
@@ -90,4 +95,5 @@ public class BaseActivity extends AppCompatActivity {
     public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode) {
         super.startActivityFromFragment(fragment, intent, requestCode);
     }
+
 }

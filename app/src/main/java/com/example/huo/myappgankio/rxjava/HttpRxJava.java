@@ -23,10 +23,6 @@ public abstract class HttpRxJava<T> {
     private static final String BASE_URL = "http://gank.io/";
     public Retrofit mRetrofit;
     private RxjavaListener mRxjavaListener;
-
-    private T t;
-
-
     public HttpRxJava() {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.connectTimeout(5, TimeUnit.SECONDS);
@@ -37,9 +33,9 @@ public abstract class HttpRxJava<T> {
                 .build();
     }
 
-    public abstract Object getObject();
+    protected abstract Object getObject();
 
-    public abstract Observable<GankIoEntity<List<T>>> getObsercable();
+    protected abstract Observable<GankIoEntity<List<T>>> getObsercable();
 
     private void getData(Subscriber<List<T>> subscriber) {
         getObsercable()

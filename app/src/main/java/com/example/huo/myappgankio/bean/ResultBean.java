@@ -7,7 +7,7 @@ package com.example.huo.myappgankio.bean;
 public class ResultBean {
     //        private String _id;
 //        private String createdAt;
-//        private String desc;
+        private String desc;
 //        private String publishedAt;
 //        private String source;
 //        private String type;
@@ -78,6 +78,14 @@ public class ResultBean {
 //        public void setUsed(boolean used) {
 //            this.used = used;
 //        }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public String getWho() {
         return who;

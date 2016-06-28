@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
+    signingConfigs{
+        release{
+            keyAlias 'gank.io'
+            keyPassword'hsl_1988'
+            storeFile file('/home/huo/Andriod-studio/干货io.jks')
+            storePassword'hsl_1988'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
     defaultConfig {
@@ -14,6 +22,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,11 +51,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:23.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -56,4 +60,10 @@ dependencies {
     compile 'com.williammora:snackbar:1.4.0'
     compile 'com.github.viethoa:snackbar:1.0.0'
     compile 'com.android.support:design:23.4.0'
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support:support-annotations:23.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.charonchui.vitamio:vitamio:4.2.2'
 }
