@@ -1,10 +1,12 @@
 package com.example.huo.myappgankio.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.huo.myappgankio.R;
@@ -51,12 +53,23 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_menu, parent,
-                    false);
-        TextView view = (TextView) convertView;
-        view.setText(getItem(position).getMenuTitle());
-        view.setCompoundDrawablesWithIntrinsicBounds(getItem(position).getMenuIcon(), 0, 0, 0);
-        return view;
+        if (position == 0) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_gank, parent,
+                        false);
+                ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_gank);
+                imageView.setImageResource((getItem(position).getMenuIcon()));
+            }
+
+        } else {
+
+            if (convertView == null)
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_menu, parent,
+                        false);
+            ((TextView) convertView).setText(getItem(position).getMenuTitle());
+            ((TextView) convertView).setCompoundDrawablesWithIntrinsicBounds(getItem(position)
+                    .getMenuIcon(), 0, 0, 0);
+        }
+        return convertView;
     }
 }

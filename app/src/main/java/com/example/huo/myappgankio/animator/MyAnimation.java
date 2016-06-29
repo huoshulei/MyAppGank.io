@@ -38,7 +38,7 @@ public class MyAnimation extends Animation {
         //三个参数分别是top距离 底部距离 两端距离
         mCamera.translate(0, 0, 80.f - 80.f * interpolatedTime);
 //        mCamera.rotateX(360 * interpolatedTime);//x轴旋转
-        mCamera.rotateY(-45 * interpolatedTime);//y轴旋转
+        mCamera.rotateY(180* interpolatedTime);//y轴旋转
 //        mCamera.rotateZ(360 * interpolatedTime);//z轴旋转
         Matrix matrix = t.getMatrix();
         mCamera.getMatrix(matrix);
@@ -46,4 +46,5 @@ public class MyAnimation extends Animation {
         matrix.preTranslate(-centerX, -centerY);
         matrix.postTranslate(centerX, centerY);
     }
+
 }

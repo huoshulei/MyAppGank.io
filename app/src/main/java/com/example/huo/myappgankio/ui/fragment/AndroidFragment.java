@@ -61,8 +61,8 @@ public class AndroidFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        type = getArguments().getString("TYPE");
-//        data = getArguments().getString("DATA");
+        type = getArguments().getString("TYPE");
+        data = getArguments().getString("DATA");
         getData(page + "");
     }
 

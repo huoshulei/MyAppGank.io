@@ -66,7 +66,7 @@ public class SisterActivity extends BaseActivity {
     private void initAnim() {
         mAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim
                 .sister_anim);
-        mMyAnimation = new MyAnimation(1500, getWidth(), getHeight()/2);
+        mMyAnimation = new MyAnimation(1500, getWidth()/2, getHeight()/2);
     }
 
 //    @Override
@@ -215,6 +215,7 @@ public class SisterActivity extends BaseActivity {
 //                getLayoutInflater().inflate()
                 ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0).setAnimation
                         (mMyAnimation);
+//                mIvSister.setAnimation(mMyAnimation);
             }
         });
     }

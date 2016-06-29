@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_gank"
+    android:layout_width="111dp"
+    android:layout_height="111dp"
+    app:cardBackgroundColor="@color/cardview_dark_background"
+    app:cardCornerRadius="55dp">
+
+    <ImageView
+        android:id="@+id/iv_gank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"/>
+</android.support.v7.widget.CardView>
